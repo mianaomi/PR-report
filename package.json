@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@octokit/core": "^4.2.0",
+    "parse-github-url": "^1.0.2",
+    "readline-sync": "^1.4.10"
+  }
+}
