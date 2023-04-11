@@ -27,7 +27,7 @@ const parseURL = gh(str2);
   }
   )
 
-   class pullReq{
+   class pullReq{  // obj pull request, contains data from requests
     constructor(inputPR){
       this.id = inputPR.id;
       this.title = inputPR.title;
@@ -40,7 +40,7 @@ const parseURL = gh(str2);
       this.countOfChecks;
     }
   
-   static async prConstReplacement(input){
+   static async prConstReplacement(input){ // factory method
     const pr = new pullReq(input);
     const checks = await octokit.request('GET /repos/{owner}/{repo}/commits/{ref}/check-runs', {
       owner: parseURL.owner,
@@ -50,11 +50,15 @@ const parseURL = gh(str2);
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
-    pr.checksList = checks.data.check_runs;
+    pr.checksList = checks.data.check_runs; // temporarily using inst vars for scope access
     pr.countOfChecks = checks.data.total_count;
     await pr.getPassedChecks();
     await pr.getFailedChecks();
     pr.allChecks = (pr.failedChecks.length == 0 && pr.checksList.length !== 0);
+    pr.checksList = new Array();
+    for (var cIndex = 0; cIndex < checks.data.check_runs.length; cIndex++){
+      pr.checksList.push(checks.data.check_runs[cIndex].name);
+    }
     return pr;
    } 
     
@@ -97,7 +101,7 @@ for (var jsonIndex = 0; jsonIndex < pullList.data.length && approvedPulls.length
 }
 
 
-fs.writeFileSync("thing.json", JSON.stringify(approvedPulls, undefined, 1 )); // print to JSON
+fs.writeFileSync("report.json", JSON.stringify(approvedPulls, undefined, 1 )); // print to JSON
 
 
   
