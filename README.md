@@ -10,7 +10,7 @@ The report includes the following fields for each PR:
 - PR number (sometimes also called id).
 - PR title.
 - The author of the PR.
-- When it was merged (hint: take a look at the `closed_X` properties).
+- When it was merged 
 - A list with the names of the checks that passed.
 - A list with the names of the checks that failed.
 - A boolean indicating whether all checks passed.
